@@ -1,5 +1,7 @@
+using AspNetCore.PaginatedList;
 using Microsoft.AspNetCore.Mvc;
 using PeopleIncApi.Models;
+using X.PagedList;
 
 namespace PeopleIncApi.Interfaces
 {
@@ -11,5 +13,6 @@ namespace PeopleIncApi.Interfaces
         Task UpdatePessoa(int id, Pessoa pessoa);
         Task DeletePessoa(int id);
         Task UploadCSV(IFormFile file);
+        Task<IPagedList<Pessoa>> GetPessoasPaginadas(int pageNumber, int pageSize);
     }
 }

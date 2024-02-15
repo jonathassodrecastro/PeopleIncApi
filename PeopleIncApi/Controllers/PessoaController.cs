@@ -22,11 +22,13 @@ namespace PeopleIncApi.Controllers
         /// <summary>
         /// Obtém todas as pessoas.
         /// </summary>
+        /// <param name="pageNumber">Número de páginas.</param>
+        /// <param name="pageSize">Tamanho da página.</param>
         /// <returns>Uma lista de pessoas.</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pessoa>>> GetPessoas()
+        public async Task<ActionResult<IEnumerable<Pessoa>>> GetPessoas(int pageNumber, int pageSize)
         {
-            return Ok(await _pessoaService.GetAllPessoas());
+            return Ok(await _pessoaService.GetPessoasPaginadas(pageNumber, pageSize));
         }
 
         /// <summary>

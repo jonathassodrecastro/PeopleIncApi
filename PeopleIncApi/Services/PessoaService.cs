@@ -1,7 +1,8 @@
+using AspNetCore.PaginatedList;
 using PeopleIncApi.Exceptions;
 using PeopleIncApi.Interfaces;
 using PeopleIncApi.Models;
-
+using X.PagedList;
 
 namespace PeopleIncApi.Services
 {
@@ -49,6 +50,11 @@ namespace PeopleIncApi.Services
         public async Task<Pessoa> GetPessoa(int id)
         {
             return await _pessoaRepository.GetPessoa(id);
+        }
+
+        public async Task<IPagedList<Pessoa>> GetPessoasPaginadas(int pageNumber, int pageSize)
+        {
+            return await _pessoaRepository.GetPessoasPaginadas(pageNumber, pageSize);
         }
 
         public async Task UpdatePessoa(int id, Pessoa pessoa)

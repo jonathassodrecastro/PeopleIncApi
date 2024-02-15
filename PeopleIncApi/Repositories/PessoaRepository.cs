@@ -3,18 +3,14 @@ using PeopleIncApi.Exceptions;
 using PeopleIncApi.Interfaces;
 using PeopleIncApi.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using AspNetCore.PaginatedList;
+using X.PagedList;
 
 namespace PeopleIncApi.Repositories
 {
     public class PessoaRepository : IPessoaRepository
     {
+        public const string header = "Nome;Idade;Email";
         private readonly Context _context;
         public PessoaRepository(Context context)
         {
@@ -88,6 +84,17 @@ namespace PeopleIncApi.Repositories
             return await _context.Pessoas.FindAsync(id);
         }
 
+        public async Task<IPagedList<Pessoa>> GetPessoasPaginadas(int pageNumber, int pageSize)
+        {
+            var pessoas = await GetAllPessoas();
+
+            var pessoasPaginadas = pessoas
+                .OrderBy(p => p.Id)
+                .ToPagedList(pageNumber, pageSize);
+
+            return pessoasPaginadas;
+        }
+
         public async Task UpdatePessoa(int id, Pessoa pessoa)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
@@ -135,7 +142,7 @@ namespace PeopleIncApi.Repositories
                 using (var reader = new StreamReader(file.OpenReadStream()))
                 {
                     var headerLine = await reader.ReadLineAsync();
-                    var expectedHeader = "Nome,Idade,Email";
+                    var expectedHeader = header;
 
                     if (headerLine != expectedHeader)
                     {
