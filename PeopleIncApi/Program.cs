@@ -18,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "PeopleIncAPI", Version = "v1" });
 
     // Especifique o caminho para o arquivo XML de documentação
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -52,7 +52,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "PeopleIncAPI V1");
     });
 }
 app.UseHttpsRedirection();

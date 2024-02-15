@@ -12,11 +12,11 @@ namespace PeopleIncApi.Controllers
     [Route("api/[controller]")]
     public class PessoaController : ControllerBase
     {
-        private readonly IPessoaService _pessoaService;
+        private readonly IPessoaRepository _pessoaRepository;
 
-        public PessoaController(IPessoaService pessoaService)
+        public PessoaController(IPessoaRepository pessoaService)
         {
-            _pessoaService = pessoaService;
+            _pessoaRepository = pessoaService;
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace PeopleIncApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pessoa>>> GetPessoas(int pageNumber, int pageSize)
         {
-            return Ok(await _pessoaService.GetPessoasPaginadas(pageNumber, pageSize));
+            return Ok(await _pessoaRepository.GetPessoasPaginadas(pageNumber, pageSize));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace PeopleIncApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Pessoa>> GetPessoa(int id)
         {
-            var pessoa = await _pessoaService.GetPessoa(id);
+            var pessoa = await _pessoaRepository.GetPessoa(id);
 
             if (pessoa == null)
             {
@@ -57,7 +57,7 @@ namespace PeopleIncApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Pessoa>> AddPessoa([FromBody] PessoaRequest pessoaRequest)
         {
-            await _pessoaService.AddPessoa(pessoaRequest.Nome, pessoaRequest.Idade, pessoaRequest.Email);
+            await _pessoaRepository.AddPessoa(pessoaRequest.Nome, pessoaRequest.Idade, pessoaRequest.Email);
             return Ok(pessoaRequest);
         }
 
@@ -77,7 +77,7 @@ namespace PeopleIncApi.Controllers
 
             try
             {
-                await _pessoaService.UpdatePessoa(id, pessoa);
+                await _pessoaRepository.UpdatePessoa(id, pessoa);
                 return Ok(pessoa);
             }
             catch (ArgumentException)
@@ -94,13 +94,13 @@ namespace PeopleIncApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePessoa(int id)
         {
-            var pessoa = await _pessoaService.GetPessoa(id);
+            var pessoa = await _pessoaRepository.GetPessoa(id);
             if (pessoa == null)
             {
                 return NotFound();
             }
 
-            await _pessoaService.DeletePessoa(id);
+            await _pessoaRepository.DeletePessoa(id);
 
             return NoContent();
         }
@@ -115,7 +115,7 @@ namespace PeopleIncApi.Controllers
         {
             try
             {
-                await _pessoaService.UploadCSV(file);
+                await _pessoaRepository.UploadCSV(file);
                 return Ok("Pessoas adicionadas com sucesso.");
             }
             catch (Exception ex)

@@ -8,7 +8,7 @@ namespace PeopleIncApi.Interfaces
     public interface IPessoaService
     {
         Task<IEnumerable<Pessoa>> GetAllPessoas();
-        Task<Pessoa> GetPessoa(int id);
+        Task<Pessoa> GetPessoa(long id);
         Task AddPessoa(string nome, int idade, string email);
         Task UpdatePessoa(int id, Pessoa pessoa);
         Task DeletePessoa(int id);
