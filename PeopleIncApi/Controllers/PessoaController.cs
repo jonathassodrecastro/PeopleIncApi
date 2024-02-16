@@ -38,6 +38,7 @@ namespace PeopleIncApi.Controllers
         /// </summary>
         /// <param name="id">O ID da pessoa.</param>
         /// <returns>A pessoa encontrada.</returns>
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Pessoa>> GetPessoa(int id)
         {
@@ -56,6 +57,7 @@ namespace PeopleIncApi.Controllers
         /// </summary>
         /// <param name="pessoaRequest">Os dados da pessoa a ser adicionada.</param>
         /// <returns>A pessoa adicionada.</returns>
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Pessoa>> AddPessoa([FromBody] PessoaRequest pessoaRequest)
         {
@@ -93,6 +95,7 @@ namespace PeopleIncApi.Controllers
         /// </summary>
         /// <param name="id">O ID da pessoa a ser removida.</param>
         /// <returns>Um status HTTP indicando o resultado da operação.</returns>
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePessoa(int id)
         {
@@ -112,6 +115,7 @@ namespace PeopleIncApi.Controllers
         /// </summary>
         /// <param name="file">O arquivo CSV a ser processado.</param>
         /// <returns>Um status HTTP indicando o resultado da operação.</returns>
+        [Authorize]
         [HttpPost("Upload")]
         public async Task<IActionResult> UploadCSV(IFormFile file)
         {
