@@ -137,6 +137,8 @@ namespace PeopleIncApi.Services
                 throw new ServiceException("O arquivo é muito grande. O tamanho máximo permitido é de 1MB.");
             }
 
+            List<string> linhasInvalidas = new List<string>();
+
             try
             {
                 using (var reader = new StreamReader(file.OpenReadStream()))
@@ -156,12 +158,25 @@ namespace PeopleIncApi.Services
                         var line = await reader.ReadLineAsync();
                         var values = line.Split(';');
 
-                        pessoas.Add(new PessoaCSVModel
+                        if (values.Length != 3) // Verifica se a linha tem o formato esperado
                         {
-                            Nome = values[0],
-                            Idade = int.Parse(values[1]),
-                            Email = values[2]
-                        });
+                            linhasInvalidas.Add(line);
+                            continue; // Ignora a linha e passa para a próxima
+                        }
+
+                        try
+                        {
+                            pessoas.Add(new PessoaCSVModel
+                            {
+                                Nome = values[0],
+                                Idade = int.Parse(values[1]),
+                                Email = values[2]
+                            });
+                        }
+                        catch (FormatException)
+                        {
+                            linhasInvalidas.Add(line); // Adiciona a linha inválida à lista
+                        }
                     }
 
                     foreach (var pessoa in pessoas)
@@ -174,12 +189,17 @@ namespace PeopleIncApi.Services
                     }
                 }
 
+                if (linhasInvalidas.Any())
+                {
+                    throw new InvalidDataException($"Linhas inválidas no arquivo: {linhasInvalidas}.");
+                }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                throw new ServiceException(ex.Message);
+                throw;
             }
         }
+
 
         private bool PessoaExists(int id)
         {

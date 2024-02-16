@@ -10,6 +10,9 @@ using PeopleIncApi.Services;
 using System.Reflection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Diagnostics;
+using System.Text.Json;
+using PeopleIncApi.Exceptions;
 
 var configuration = new ConfigurationBuilder()
         .SetBasePath(Directory.GetCurrentDirectory())
@@ -102,7 +105,84 @@ if (app.Environment.IsDevelopment())
 }
 app.UseHttpsRedirection();
 
-//app.UseAuthorization();
+// Configuração do ExceptionHandler
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+        var exception = exceptionHandlerPathFeature?.Error;
+
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        context.Response.ContentType = "application/json";
+
+        if (exception is InvalidDataException invalidDataException)
+        {
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await context.Response.WriteAsync(JsonSerializer.Serialize(new
+            {
+                error = new
+                {
+                    message = invalidDataException.Message,
+                    
+                }
+            }));
+        }
+
+        if (exception is InvalidHeaderException invalidHeaderException)
+        {
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await context.Response.WriteAsync(JsonSerializer.Serialize(new
+            {
+                error = new
+                {
+                    message = invalidHeaderException.Message,
+                    
+                }
+            }));
+        }
+
+        if (exception is NotFoundException notFoundException)
+        {
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await context.Response.WriteAsync(JsonSerializer.Serialize(new
+            {
+                error = new
+                {
+                    message = notFoundException.Message,
+                    
+                }
+            }));
+        }
+
+        if (exception is ServiceException serviceException)
+        {
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await context.Response.WriteAsync(JsonSerializer.Serialize(new
+            {
+                error = new
+                {
+                    message = serviceException.Message,
+                    
+                }
+            }));
+        }
+
+        else
+        {
+            // Tratar outras exceções e gerar a resposta adequada
+            await context.Response.WriteAsync(JsonSerializer.Serialize(new
+            {
+                error = new
+                {
+                    message = exception?.Message,
+                    stackTrace = exception?.StackTrace
+                }
+            }));
+        }
+    });
+});
+
 
 app.UseRouting();
 app.UseAuthentication();
