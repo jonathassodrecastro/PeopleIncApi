@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PeopleIncApi.Interfaces;
 using PeopleIncApi.Models;
@@ -25,6 +26,7 @@ namespace PeopleIncApi.Controllers
         /// <param name="pageNumber">Número de páginas.</param>
         /// <param name="pageSize">Tamanho da página.</param>
         /// <returns>Uma lista de pessoas.</returns>
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pessoa>>> GetPessoas(int pageNumber, int pageSize)
         {
