@@ -64,7 +64,7 @@ namespace PeopleIncApi.Repositories
             }
             catch (NotFoundException)
             {
-                throw new NotFoundException("Produto não encontrado");
+                throw new NotFoundException("Pessoa não encontrado");
             }
             catch (ArgumentException ex)
             {
@@ -72,7 +72,7 @@ namespace PeopleIncApi.Repositories
             }
             catch (Exception ex)
             {
-                throw new ServiceException("Erro ao atualizar produto", ex);
+                throw new ServiceException("Erro ao atualizar pessoa", ex);
             }
         }
 

@@ -27,7 +27,7 @@ namespace PeopleIncApi.Controllers
         /// <param name="pageSize">Tamanho da página.</param>
         /// <returns>Uma lista de pessoas.</returns>
         [Authorize]
-        [HttpGet]
+        [HttpGet("GetPessoas")]
         public async Task<ActionResult<IEnumerable<Pessoa>>> GetPessoas(int pageNumber, int pageSize)
         {
             return Ok(await _pessoaRepository.GetPessoasPaginadas(pageNumber, pageSize));
@@ -39,7 +39,7 @@ namespace PeopleIncApi.Controllers
         /// <param name="id">O ID da pessoa.</param>
         /// <returns>A pessoa encontrada.</returns>
         [Authorize]
-        [HttpGet("{id}")]
+        [HttpGet("GetPessoa/{id}")]
         public async Task<ActionResult<Pessoa>> GetPessoa(int id)
         {
             var pessoa = await _pessoaRepository.GetPessoa(id);
@@ -58,7 +58,7 @@ namespace PeopleIncApi.Controllers
         /// <param name="pessoaRequest">Os dados da pessoa a ser adicionada.</param>
         /// <returns>A pessoa adicionada.</returns>
         [Authorize]
-        [HttpPost]
+        [HttpPost("AddPessoa")]
         public async Task<ActionResult<Pessoa>> AddPessoa([FromBody] PessoaRequest pessoaRequest)
         {
             await _pessoaRepository.AddPessoa(pessoaRequest.Nome, pessoaRequest.Idade, pessoaRequest.Email);
@@ -71,7 +71,7 @@ namespace PeopleIncApi.Controllers
         /// <param name="id">O ID da pessoa a ser atualizada.</param>
         /// <param name="pessoa">Os novos dados da pessoa.</param>
         /// <returns>Um status HTTP indicando o resultado da operação.</returns>
-        [HttpPut("{id}")]
+        [HttpPut("UpdatePessoa/{id}")]
         public async Task<IActionResult> UpdatePessoa(int id, Pessoa pessoa)
         {
             if (id != pessoa.Id)
@@ -96,7 +96,7 @@ namespace PeopleIncApi.Controllers
         /// <param name="id">O ID da pessoa a ser removida.</param>
         /// <returns>Um status HTTP indicando o resultado da operação.</returns>
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpDelete("DeletePessoa/{id}")]
         public async Task<IActionResult> DeletePessoa(int id)
         {
             var pessoa = await _pessoaRepository.GetPessoa(id);
@@ -116,7 +116,7 @@ namespace PeopleIncApi.Controllers
         /// <param name="file">O arquivo CSV a ser processado.</param>
         /// <returns>Um status HTTP indicando o resultado da operação.</returns>
         [Authorize]
-        [HttpPost("Upload")]
+        [HttpPost("UploadCSV")]
         public async Task<IActionResult> UploadCSV(IFormFile file)
         {
             try
