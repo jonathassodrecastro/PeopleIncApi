@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PeopleIncApi.Models;
+using Bogus;
+using PeopleIncApi.Services;
 
 namespace PeopleIncApi.Data
 {
@@ -18,6 +20,9 @@ namespace PeopleIncApi.Data
 
             modelBuilder.Entity<Pessoa>().ToTable("Pessoa");
 
+            modelBuilder.Entity<Pessoa>().HasData(GenerateRandomPeople(10));
+
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -32,6 +37,18 @@ namespace PeopleIncApi.Data
 
                 optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             }
+        }
+
+        private Pessoa[] GenerateRandomPeople(int count)
+        {
+            var faker = new Faker<Pessoa>()
+                            .RuleFor(p => p.Id, f => f.Random.Long(1, 100))
+                            .RuleFor(p => p.Nome, f => f.Name.FirstName())
+                            .RuleFor(p => p.Idade, f => f.Random.Int(20, 55))
+                            .RuleFor(p => p.Email, f => f.Internet.Email());
+
+            return faker.Generate(count).ToArray();
+   
         }
     }
 }
