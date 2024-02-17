@@ -1,5 +1,3 @@
-using AspNetCore.PaginatedList;
-using Microsoft.AspNetCore.Mvc;
 using PeopleIncApi.Models;
 using X.PagedList;
 

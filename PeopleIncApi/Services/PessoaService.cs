@@ -1,9 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using PeopleIncApi.Data;
 using PeopleIncApi.Exceptions;
 using PeopleIncApi.Interfaces;
 using PeopleIncApi.Models;
-using Microsoft.EntityFrameworkCore;
-using AspNetCore.PaginatedList;
 using X.PagedList;
 
 namespace PeopleIncApi.Services
@@ -194,7 +193,7 @@ namespace PeopleIncApi.Services
                     throw new InvalidDataException($"Linhas inválidas no arquivo: {linhasInvalidas}.");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
             }

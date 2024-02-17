@@ -2,7 +2,7 @@ namespace PeopleIncApi.Exceptions
 {
     public class ServiceException : Exception
     {
-         public ServiceException()
+        public ServiceException()
         {
         }
 

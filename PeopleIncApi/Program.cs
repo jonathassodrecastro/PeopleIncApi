@@ -1,18 +1,18 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using PeopleIncApi.Data;
+using PeopleIncApi.Exceptions;
 using PeopleIncApi.Interfaces;
 using PeopleIncApi.Repositories;
 using PeopleIncApi.Security;
 using PeopleIncApi.Services;
 using System.Reflection;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.AspNetCore.Diagnostics;
 using System.Text.Json;
-using PeopleIncApi.Exceptions;
 
 var configuration = new ConfigurationBuilder()
         .SetBasePath(Directory.GetCurrentDirectory())
@@ -124,7 +124,7 @@ app.UseExceptionHandler(errorApp =>
                 error = new
                 {
                     message = invalidDataException.Message,
-                    
+
                 }
             }));
         }
@@ -137,7 +137,7 @@ app.UseExceptionHandler(errorApp =>
                 error = new
                 {
                     message = invalidHeaderException.Message,
-                    
+
                 }
             }));
         }
@@ -150,7 +150,7 @@ app.UseExceptionHandler(errorApp =>
                 error = new
                 {
                     message = notFoundException.Message,
-                    
+
                 }
             }));
         }
@@ -163,7 +163,7 @@ app.UseExceptionHandler(errorApp =>
                 error = new
                 {
                     message = serviceException.Message,
-                    
+
                 }
             }));
         }

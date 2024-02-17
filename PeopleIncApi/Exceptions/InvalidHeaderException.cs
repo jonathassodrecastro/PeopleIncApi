@@ -2,7 +2,7 @@ namespace PeopleIncApi.Exceptions
 {
     public class InvalidHeaderException : Exception
     {
-         public InvalidHeaderException()
+        public InvalidHeaderException()
         {
         }
 

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace PeopleIncApi.Requests
+﻿namespace PeopleIncApi.Requests
 {
     public class PessoaRequest
     {

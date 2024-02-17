@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PeopleIncApi.Interfaces;
-using System;
 
 namespace PeopleIncApi.Controllers
 {
