@@ -144,6 +144,7 @@ namespace PeopleIncApi.Services
                 {
                     var headerLine = await reader.ReadLineAsync();
                     var expectedHeader = header;
+                    int lineNumber = 1; // Inicialize o número da linha
 
                     if (headerLine != expectedHeader)
                     {
@@ -159,15 +160,17 @@ namespace PeopleIncApi.Services
 
                         if (values.Length != 3) // Verifica se a linha tem o formato esperado
                         {
-                            linhasInvalidas.Add($"{line} - linha inválida");
+                            linhasInvalidas.Add($"Linha {lineNumber}: {line} - linha inválida");
                             continue; // Ignora a linha e passa para a próxima
                         }
 
                         if (EmailExists(values[2])) //Verifica se o e-mail já está no banco
                         {
-                            linhasInvalidas.Add($"{line} - e-mail já cadastrado para outra pessoa");
+                            linhasInvalidas.Add($"Linha {lineNumber}: {line} - e-mail já cadastrado para outra pessoa");
                             continue;
                         }
+
+                        lineNumber++; // Incrementa o número da linha
 
                         try
                         {
