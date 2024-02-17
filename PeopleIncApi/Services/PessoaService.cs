@@ -190,13 +190,14 @@ namespace PeopleIncApi.Services
 
                 if (linhasInvalidas.Any())
                 {
-                    throw new InvalidDataException($"Linhas inválidas no arquivo: {linhasInvalidas}.");
+                    throw new InvalidDataException($"Linhas inválidas no arquivo: {string.Join(", ", linhasInvalidas)}.");
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
+
         }
 
 

@@ -82,6 +82,18 @@ namespace PeopleIncApi.Repositories
             {
                 await _pessoaService.UploadCSV(file);
             }
+            catch (InvalidDataException)
+            {
+                throw;
+            }
+            catch (InvalidHeaderException) 
+            {
+                throw;
+            }
+            catch (FormatException) 
+            {
+                throw;
+            }
             catch (Exception ex)
             {
                 throw new ServiceException("Erro ao fazer upload", ex);

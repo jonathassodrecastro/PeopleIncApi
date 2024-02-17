@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PeopleIncApi.Exceptions;
 using PeopleIncApi.Interfaces;
 using PeopleIncApi.Models;
 using PeopleIncApi.Requests;
@@ -124,9 +125,21 @@ namespace PeopleIncApi.Controllers
                 await _pessoaRepository.UploadCSV(file);
                 return Ok("Pessoas adicionadas com sucesso.");
             }
+            catch (InvalidDataException ex)
+            {               
+                return BadRequest(ex.Message); 
+            }
+            catch (InvalidHeaderException ex)
+            {             
+                return BadRequest(ex.Message); 
+            }
+            catch (ServiceException ex)
+            {                
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); 
+            }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao processar o arquivo: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message); 
             }
         }
     }
