@@ -159,8 +159,14 @@ namespace PeopleIncApi.Services
 
                         if (values.Length != 3) // Verifica se a linha tem o formato esperado
                         {
-                            linhasInvalidas.Add(line);
+                            linhasInvalidas.Add($"{line} - linha inválida");
                             continue; // Ignora a linha e passa para a próxima
+                        }
+
+                        if (EmailExists(values[2])) //Verifica se o e-mail já está no banco
+                        {
+                            linhasInvalidas.Add($"{line} - e-mail já cadastrado para outra pessoa");
+                            continue;
                         }
 
                         try
@@ -190,7 +196,7 @@ namespace PeopleIncApi.Services
 
                 if (linhasInvalidas.Any())
                 {
-                    throw new InvalidDataException($"Linhas inválidas no arquivo: {string.Join(", ", linhasInvalidas)}.");
+                    throw new InvalidDataException($"Linhas inválidas no arquivo:\n{string.Join("\n", linhasInvalidas)}.");
                 }
             }
             catch
@@ -200,6 +206,10 @@ namespace PeopleIncApi.Services
 
         }
 
+        private bool EmailExists(string email) 
+        {
+            return _context.Pessoas.Any(e => e.Email == email);
+        }
 
         private bool PessoaExists(int id)
         {
