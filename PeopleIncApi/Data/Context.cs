@@ -6,7 +6,7 @@ using PeopleIncApi.Services;
 namespace PeopleIncApi.Data
 {
     public class Context : DbContext
-    {
+    {//bkp
         public Context(DbContextOptions<Context> options) : base(options){}
 
         public DbSet<Pessoa> Pessoas {get; set;}
