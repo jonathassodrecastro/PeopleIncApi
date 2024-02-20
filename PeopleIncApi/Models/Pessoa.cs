@@ -17,7 +17,6 @@ namespace PeopleIncApi.Models
         [Range(1, 150)]
         public int Idade { get; set; }
 
-        [Key]
         [Required]
         [MaxLength(150)]
         [EmailAddress]

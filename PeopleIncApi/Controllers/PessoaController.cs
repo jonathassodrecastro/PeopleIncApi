@@ -61,9 +61,11 @@ namespace PeopleIncApi.Controllers
         [Authorize]
         [HttpPost("AddPessoa")]
         public async Task<ActionResult<Pessoa>> AddPessoa([FromBody] PessoaRequest pessoaRequest)
-        {
-            await _pessoaRepository.AddPessoa(pessoaRequest.Nome, pessoaRequest.Idade, pessoaRequest.Email);
-            return Ok(pessoaRequest);
+        {         
+
+            var pessoaCriada = await _pessoaRepository.AddPessoa(pessoaRequest.Nome, pessoaRequest.Idade, pessoaRequest.Email);
+
+            return Ok(pessoaCriada);
         }
 
         /// <summary>

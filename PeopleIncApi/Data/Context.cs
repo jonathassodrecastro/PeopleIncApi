@@ -17,9 +17,6 @@ namespace PeopleIncApi.Data
                 .Property(p => p.Id)
                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Pessoa>()
-                .HasKey(p => p.Email); // Define o campo 'Email' como chave primária
-
             modelBuilder.Entity<Pessoa>().ToTable("Pessoa");
 
             //modelBuilder.Entity<Pessoa>().HasData(GenerateRandomPeople(10));

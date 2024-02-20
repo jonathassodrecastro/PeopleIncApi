@@ -16,7 +16,7 @@ namespace PeopleIncApi.Services
             _context = context;
         }
 
-        public async Task AddPessoa(string nome, int idade, string email)
+        public async Task<Pessoa> AddPessoa(string nome, int idade, string email)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
 
@@ -39,6 +39,8 @@ namespace PeopleIncApi.Services
                 await _context.SaveChangesAsync();
 
                 await transaction.CommitAsync();
+
+                return pessoa;
             }
             catch
             {
@@ -47,7 +49,7 @@ namespace PeopleIncApi.Services
             }
         }
 
-        public async Task DeletePessoa(int id)
+        public async Task DeletePessoa(long id)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
 

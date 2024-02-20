@@ -13,11 +13,12 @@ namespace PeopleIncApi.Repositories
         {
             _pessoaService = pessoaService;
         }
-        public async Task AddPessoa(string nome, int idade, string email)
+        public async Task<Pessoa> AddPessoa(string nome, int idade, string email)
         {
             try
             {
-                await _pessoaService.AddPessoa(nome, idade, email);
+                var pessoa = await _pessoaService.AddPessoa(nome, idade, email);
+                return pessoa;
             }
             catch (Exception ex)
             {
@@ -25,7 +26,7 @@ namespace PeopleIncApi.Repositories
             }
         }
 
-        public async Task DeletePessoa(int id)
+        public async Task DeletePessoa(long id)
         {
             try
             {

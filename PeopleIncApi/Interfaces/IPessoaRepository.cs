@@ -7,9 +7,9 @@ namespace PeopleIncApi.Interfaces
     {
         Task<IEnumerable<Pessoa>> GetAllPessoas();
         Task<Pessoa> GetPessoa(int id);
-        Task AddPessoa(string nome, int idade, string email);
+        Task<Pessoa> AddPessoa(string nome, int idade, string email);
         Task UpdatePessoa(int id, Pessoa pessoa);
-        Task DeletePessoa(int id);
+        Task DeletePessoa(long id);
         Task UploadCSV(IFormFile file);
         Task<IPagedList<Pessoa>> GetPessoasPaginadas(int pageNumber, int pageSize);
     }
