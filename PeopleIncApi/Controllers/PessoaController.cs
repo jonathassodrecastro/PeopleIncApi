@@ -110,7 +110,7 @@ namespace PeopleIncApi.Controllers
 
             await _pessoaRepository.DeletePessoa(id);
 
-            return NoContent();
+            return Ok("Pessoa deletada com sucesso.");
         }
 
         /// <summary>
