@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeopleIncApi", "PeopleIncAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeopleIncTests", "PeopleIncTests\PeopleIncTests.csproj", "{EF0A8D23-0A4D-49B5-BE70-E2E7C4F86BB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleIncFront", "PeopleIncFront\PeopleIncFront.csproj", "{311B24B3-0173-4DA9-AF1F-EA8F424F222C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
