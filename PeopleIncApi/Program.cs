@@ -27,12 +27,12 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "PeopleIncAPI", Version = "v1" });
 
-    // Especifique o caminho para o arquivo XML de documentação
+    // Especifique o caminho para o arquivo XML de documentaï¿½ï¿½o
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 
-    // Configuração para autenticação JWT
+    // Configuraï¿½ï¿½o para autenticaï¿½ï¿½o JWT
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme.",
@@ -91,6 +91,7 @@ builder.Services.Configure<FormOptions>(o =>
     o.ValueLengthLimit = 1024 * 1024; // 1MB
 });
 
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -105,7 +106,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseHttpsRedirection();
 
-// Configuração do ExceptionHandler
+// Configuraï¿½ï¿½o do ExceptionHandler
 app.UseExceptionHandler(errorApp =>
 {
     errorApp.Run(async context =>
@@ -170,7 +171,7 @@ app.UseExceptionHandler(errorApp =>
 
         else
         {
-            // Tratar outras exceções e gerar a resposta adequada
+            // Tratar outras exceï¿½ï¿½es e gerar a resposta adequada
             await context.Response.WriteAsync(JsonSerializer.Serialize(new
             {
                 error = new
@@ -185,6 +186,13 @@ app.UseExceptionHandler(errorApp =>
 
 
 app.UseRouting();
+
+app.UseCors(
+    op => op.AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+);
+
 app.UseAuthentication();
 app.UseAuthorization();
 
